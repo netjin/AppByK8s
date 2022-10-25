@@ -1,0 +1,133 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: harbor-registry
+  labels:
+    app: harbor-registry
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: "nfs-client"
+  mountOptions:
+    - hard
+  nfs:
+    path: /data/devops/harbor/registry
+    server: 192.168.2.85
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: harbor-chartmuseum
+  labels:
+    app: harbor-chartmuseum
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: "nfs-client"
+  mountOptions:
+    - hard
+  nfs:
+    path: /data/devops/harbor/chartmuseum
+    server: 192.168.2.85
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: harbor-jobservice
+  labels:
+    app: harbor-jobservice
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: "nfs-client"
+  mountOptions:
+    - hard
+  nfs:
+    path: /data/devops/harbor/jobservice
+    server: 192.168.2.85
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: harbor-jobservice-scandata
+  labels:
+    app: harbor-jobservice-scandata
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: "nfs-client"
+  mountOptions:
+    - hard
+  nfs:
+    path: /data/devops/harbor/jobservice-scandata
+    server: 192.168.2.85
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: harbor-database
+  labels:
+    app: harbor-database
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: "nfs-client"
+  mountOptions:
+    - hard
+  nfs:
+    path: /data/devops/harbor/database
+    server: 192.168.2.85
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: harbor-redis
+  labels:
+    app: harbor-redis
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: "nfs-client"
+  mountOptions:
+    - hard
+  nfs:
+    path: /data/devops/harbor/redis
+    server: 192.168.2.85
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: harbor-trivy
+  labels:
+    app: harbor-trivy
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: "nfs-client"
+  mountOptions:
+    - hard
+  nfs:
+    path: /data/devops/harbor/trivy
+    server: 192.168.2.85
+

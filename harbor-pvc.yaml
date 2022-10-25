@@ -1,0 +1,90 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: harbor-registry
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: "nfs-client"
+  resources:
+    requests:
+      storage: 50Gi
+      storage: 50Gi
+  selector:
+    matchLabels:
+      app: harbor-registry
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: harbor-chartmuseum
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: "nfs-client"
+  resources:
+    requests:
+      storage: 5Gi
+  selector:
+    matchLabels:
+      app: harbor-chartmuseum
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: harbor-jobservice
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: "nfs-client"
+  resources:
+    requests:
+      storage: 5Gi
+  selector:
+    matchLabels:
+      app: harbor-jobservice 
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: harbor-database
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: "nfs-client"
+  resources:
+    requests:
+      storage: 5Gi
+  selector:
+    matchLabels:
+      app: harbor-database
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: harbor-redis
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: "nfs-client"
+  resources:
+    requests:
+      storage: 5Gi
+  selector:
+    matchLabels:
+      app: harbor-redis
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: harbor-trivy
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: "nfs-client"
+  resources:
+    requests:
+      storage: 5Gi
+  selector:
+    matchLabels:
+      app: harbor-trivy
