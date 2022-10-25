@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: lnmp
+  name: lnmp
+spec:
+  containers:
+  - image: nginx:1.23
+    name: nginx
+    ports:
+    - containerPort: 80
+    volumeMounts:
+    - name: web-data
+      mountPath: /usr/share/nginx/html
+    - name: default-conf
+      mountPath: /etc/nginx/conf.d/default.conf
+      subPath: default.conf
+  - image: php:7.4-fpm
+    name: php-fpm
+    ports:
+    - containerPort: 9000
+  restartPolicy: Always
+  volumes:
+  - name: web-data
+    emptyDir: {}
+  - name: default-conf
+    configMap:
+      name: lnmp-conf
+      items:
+      - key: default.conf
+        path: default.conf
+

@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-lnmp
+  namespace: testenv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lnmp
+  template:
+    metadata:
+      labels:
+        app: lnmp
+    spec:
+      containers:
+      - image: nginx:1.23
+        name: nginx
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+          name: nginx80
+        volumeMounts:
+        - name: web-data
+          mountPath: /usr/share/nginx/html
+        - name: default-conf
+          mountPath: /etc/nginx/conf.d/default.conf
+          subPath: default.conf
+      - image: php:7.4-fpm
+        name: php-fpm
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9000
+          name: php9000
+      volumes:
+      - name: web-data
+        emptyDir: {}
+      - name: default-conf
+        configMap:
+          name: lnmp-conf
+          items:
+          - key: default.conf
+            path: default.conf
