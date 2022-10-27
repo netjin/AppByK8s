@@ -50,6 +50,9 @@ spec:
           mountPath: /var/log/gitlab
         - name: gitlab-persistent-data
           mountPath: /var/opt/gitlab
+        - name: gitlab-conf
+          mountPath: /etc/gitlab/gitlab.rb
+          subPath: gitlab.rb
 #      imagePullSecrets:
 #      - name: devops-repo
       volumes:
@@ -65,3 +68,9 @@ spec:
         nfs:
           server: 192.168.2.85
           path: /data/devops/gitlab/data
+      - name: gitlab-conf
+        configMap:
+          name: gitlab-cm
+          items:
+          - key: gitlab.rb
+            path: gitlab.rb
