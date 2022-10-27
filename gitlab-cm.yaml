@@ -1,4 +1,8 @@
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gitlab-cm
+  namespace: dev
 data:
   gitlab.rb: |
     ## GitLab configuration settings
@@ -3125,7 +3129,4 @@ data:
     #   'SSL_CERT_DIR' => '/opt/gitlab/embedded/ssl/cers'
     # }
     # spamcheck['classifier']['log_directory'] = "/var/log/gitlab/spam-classifier"
-kind: ConfigMap
-metadata:
-  name: gitlab-cm
-  namespace: dev
+
