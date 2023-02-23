@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: hellodocker
-        image: hub.baihehunli.com/weddingtest/hellodocker:v1
+        image: hub.xxx.com/weddingtest/hellodocker:v1
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
@@ -41,7 +41,7 @@ spec:
     spec:
       containers:
       - name: hellodocker
-        image: hub.baihehunli.com/weddingtest/hellodocker:v2
+        image: hub.xxx.com/weddingtest/hellodocker:v2
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
