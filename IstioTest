@@ -21,7 +21,7 @@ spec:
         ports:
         - containerPort: 80
       imagePullSecrets:
-      - name: baihehunli-reg
+      - name: xxx-reg
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -59,7 +59,7 @@ spec:
   gateways:
   - hellodocker-gateway
   hosts:
-  - hellodocker.baihehunli.com
+  - hellodocker.xxx.com
   http:
   - route:
     - destination:
@@ -100,17 +100,17 @@ spec:
     istio: ingressgateway
   servers:
   - hosts:
-    - hellodocker.baihehunli.com
+    - hellodocker.xxx.com
     port:
       name: http
       number: 80
       protocol: HTTP
   - hosts:
-    - hellodocker.baihehunli.com
+    - hellodocker.xxx.com
     port:
       name: https
       number: 443
       protocol: HTTPS
     tls:
-      credentialName: baihehunli-secret
+      credentialName: xxx-secret
       mode: SIMPLE
