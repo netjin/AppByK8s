@@ -1,0 +1,116 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hellodocker-v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hellodocker
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: hellodocker
+        version: v1
+    spec:
+      containers:
+      - name: hellodocker
+        image: hub.baihehunli.com/weddingtest/hellodocker:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: baihehunli-reg
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hellodocker-v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hellodocker
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: hellodocker
+        version: v2
+    spec:
+      containers:
+      - name: hellodocker
+        image: hub.baihehunli.com/weddingtest/hellodocker:v2
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: baihehunli-reg
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  managedFields:
+  - apiVersion: networking.istio.io/v1beta1
+  name: hellodocker
+  namespace: meshtest
+spec:
+  gateways:
+  - hellodocker-gateway
+  hosts:
+  - hellodocker.baihehunli.com
+  http:
+  - route:
+    - destination:
+        host: hellodocker
+        subset: v1
+      weight: 30
+    - destination:
+        host: hellodocker
+        subset: v2
+      weight: 70
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  managedFields:
+  - apiVersion: networking.istio.io/v1beta1
+  name: hellodocker
+  namespace: meshtest
+spec:
+  host: hellodocker
+  subsets:
+  - labels:
+      version: v1
+    name: v1
+  - labels:
+      version: v2
+    name: v2
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  managedFields:
+  - apiVersion: networking.istio.io/v1beta1
+  namespace: meshtest
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - hellodocker.baihehunli.com
+    port:
+      name: http
+      number: 80
+      protocol: HTTP
+  - hosts:
+    - hellodocker.baihehunli.com
+    port:
+      name: https
+      number: 443
+      protocol: HTTPS
+    tls:
+      credentialName: baihehunli-secret
+      mode: SIMPLE
