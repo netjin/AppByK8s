@@ -1,0 +1,26 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  managedFields:
+  - apiVersion: networking.istio.io/v1beta1
+  name: hellodocker-gateway
+  namespace: meshtest
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - hellodocker.xxx.com
+    port:
+      name: http
+      number: 80
+      protocol: HTTP
+  - hosts:
+    - hellodocker.xxx.com
+    port:
+      name: https
+      number: 443
+      protocol: HTTPS
+    tls:
+      credentialName: xxx-secret
+      mode: SIMPLE
