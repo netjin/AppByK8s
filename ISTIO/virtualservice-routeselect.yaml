@@ -1,0 +1,50 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  managedFields:
+  - apiVersion: networking.istio.io/v1beta1
+  name: hellodocker
+  namespace: meshtest
+spec:
+  gateways:
+  - hellodocker-gateway
+  hosts:
+  - hellodocker.xxx.com
+  http:
+  - match:
+    - headers:
+        end-user:
+          exact: jason
+    route:
+    - destination:
+        host: hellodocker
+        subset: v1
+  - match:
+    - headers:
+        sec-ch-ua-platform: #匹配操作系统
+          regex: .*macOS.*
+    route:
+    - destination:
+        host: hellodocker
+        subset: v3
+  - match:
+    - headers:
+        end-user:   #匹配dev开头end-user字段
+          regex: ^dev.*
+    route:
+    - destination:
+        host: hellodocker
+        subset: v2
+  - route:
+    - destination:
+        host: hellodocker
+        subset: v1
+      weight: 10
+    - destination:
+        host: hellodocker
+        subset: v2
+      weight: 10
+    - destination:
+        host: hellodocker
+        subset: v3
+      weight: 80
