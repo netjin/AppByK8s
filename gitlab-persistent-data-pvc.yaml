@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  finalizers:
+  managedFields:
+  name: gitlab-persistent-data-pvc
+  namespace: gitlab
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 75Gi
+  storageClassName: longhorn
+  volumeMode: Filesystem
